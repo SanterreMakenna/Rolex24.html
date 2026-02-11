@@ -1,2 +1,219 @@
 # Rolex24.html
 This is a website I helped build with information about the Rolex24 race, explaining the specs of the cars and history of the Daytona Track 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The Rolex 24</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: whitesmoke;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 30px 40px 20px;
+      background-color: darkgreen;
+      font-family: Arial;
+      color: white;
+      text-align: left;
+    }
+
+    footer {
+      margin-top: 60px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Countdown Container */
+    #countdown {
+      display: flex;
+      gap: 18px;
+    }
+
+    .time-block {
+      text-align: center;
+    }
+
+    .label {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #000;
+    }
+
+    /* Flip Card Base */
+    .flip {
+      position: relative;
+      width: 90px;
+      height: 110px;
+      perspective: 1000px;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #d4af37; /* Gold */
+      border-radius: 10px;
+      border: 2px solid #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      font-weight: bold;
+      backface-visibility: hidden;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    .card.back {
+      transform: rotateX(180deg);
+    }
+
+    /* Animation */
+    .flip.animate .flip-inner {
+      animation: flip 0.6s ease-in-out forwards;
+    }
+
+    @keyframes flip {
+      0%   { transform: rotateX(0deg); }
+      100% { transform: rotateX(180deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>The Rolex 24</h1>
+
+  <footer>
+    <div id="countdown">
+
+      <div class="time-block">
+        <div class="flip" id="days">
+          <div class="flip-inner">
+            <div class="card front">0</div>
+            <div class="card back">0</div>
+          </div>
+        </div>
+        <div class="label">DAYS</div>
+      </div>
+
+      <div class="time-block">
+        <div class="flip" id="hours">
+          <div class="flip-inner">
+            <div class="card front">0</div>
+            <div class="card back">0</div>
+          </div>
+        </div>
+        <div class="label">HOURS</div>
+      </div>
+
+      <div class="time-block">
+        <div class="flip" id="minutes">
+          <div class="flip-inner">
+            <div class="card front">0</div>
+            <div class="card back">0</div>
+          </div>
+        </div>
+        <div class="label">MINUTES</div>
+      </div>
+
+      <div class="time-block">
+        <div class="flip" id="seconds">
+          <div class="flip-inner">
+            <div class="card front">0</div>
+            <div class="card back">0</div>
+          </div>
+        </div>
+        <div class="label">SECONDS</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const targetDate = new Date("January 24, 2026 00:00:00").getTime();
+
+    let last = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+    function flipCard(id, newValue) {
+      const flip = document.getElementById(id);
+      const inner = flip.querySelector(".flip-inner");
+      const front = inner.querySelector(".front");
+      const back = inner.querySelector(".back");
+
+      if (front.textContent == newValue) return;
+
+      back.textContent = newValue;
+      flip.classList.add("animate");
+
+      setTimeout(() => {
+        front.textContent = newValue;
+        flip.classList.remove("animate");
+        inner.style.transform = "rotateX(0deg)"; // Reset
+      }, 600);
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      let distance = targetDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").innerHTML = "<h2>The race has begun!</h2>";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (days !== last.days) flipCard("days", days);
+      if (hours !== last.hours) flipCard("hours", hours);
+      if (minutes !== last.minutes) flipCard("minutes", minutes);
+      if (seconds !== last.seconds) flipCard("seconds", seconds);
+
+      last = { days, hours, minutes, seconds };
+    }
+
+    // Initial render
+    updateCountdown();
+
+    // Update every second
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+
+<h2>History of Rolex24</h2>
+
+<p>The 24 hour race we all know and love started in 1962 as a 3 hour race. with the popularity of Le Mans it was evolved to become endurance race in 1966. This race went through various names when Rolex swoops in and snatches the title sponsor in 1992. With Rolex owning the title sponsor, they award each winner "the Cosmograph" or now know as "The Daytona" which evolves and changes with every win, drivers wear it like a mini trophy, reminding them of what they accomplished. Some drivers even poke fun and claim "it's all about the watch".</p>
+  <img src="2025Watch.png" height="200" alt="2025 Rolex 24 Winner's Watch">
+
+<h3>History of Daytona International Speedway</h3>
+
+<p>Daytona International Speedway began in 1953 when Bill France Sr. put a proposal forward to construct a permanent speedway. He had realized that racing on Daytona beach was not good in the long term. So on August 16th, 1954 he signed a contact with the City of Daytona Beach and Volusia County officals to build the international speedway, soon to be loving nicknamed the "World Center of Racing". The first Daytona 500 took place on Febuary 22, 1959 with a crowd of 41,000. it quickly became "the place to be" for any and all things racing, including NASCAR, motorcycles, and others.  </p>
+  <img src="BillFrance.jpg" height="200" alt="Bill France Sr.">
+
+<p> The Daytona Internaltional Speedway is a 480-acre compex, with a 2.5 high-banked tri-oval track with 31 degree turns. this facillity sits over 100,000 guests, along with various other things like garages, restaurants and different track layouts. this track is used for more than just high-speed racing, it's continusly being used for concerts, civic and social gatherings, car shows, photo shoots, production vehicle testing, police motorcycle training, as well as track tours. </p>
+  <img src="DaytonaAbove.gif" height="200" alt="Top-down view of Daytona International Speedway">
+
+<p> to learn more about the cars and their specifics:</p>
+
+<p><a href="LMP2.html">LMP2 Cars</a></p>
+<p><a href="GTD.html">GTD and GTD Pro Cars</a></p>
+<p><a href="GTP.html">GTP Cars</a></p>
+<p><a href="https://youtube.com/@imsaofficial?si=qQm_Rmr4tX8y1gtj">Watch on Youtube</a></p>
+<p><a href="https://www.imsa.com/"> Watch on IMSA Site</a></p>
+</html>
